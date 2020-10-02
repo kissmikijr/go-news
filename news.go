@@ -15,7 +15,7 @@ type HeadlinesParameters struct {
 	country  string
 	category string
 	q        string
-	language string
+	sources  string
 	pageSize int
 	page     int
 }
@@ -42,24 +42,25 @@ type HeadlinesResponse struct {
 func NewApi(apiKey string) *newsApi {
 	return &newsApi{apiKey}
 }
-func createUrl(hp *HeadlinesParameters, path string, apiKey string) (string, error) {
-	if hp.country == "" && hp.q == "" && hp.category == "" && hp.language == "" {
+func (c *newsApi) createUrl(hp *HeadlinesParameters, path string) (string, error) {
+	url := baseUrl + fmt.Sprintf("%s?apiKey=%s", path, c.apiKey)
+	if hp.country == "" && hp.q == "" && hp.category == "" {
 		return "", errors.New("Required parameters are missing. Please set any of the following parameters and try again: sources, q, language, country, category.")
 	}
-	if hp.q != "" && (hp.country != "" || hp.category != "") {
+	if hp.sources != "" && (hp.country != "" || hp.category != "") {
 		return "", errors.New("You cant mix sources parameter with neither country nor category")
 	}
 	if hp.country != "" {
-		baseUrl = baseUrl + fmt.Sprintf("country=%s", hp.country)
+		url = url + fmt.Sprintf("&country=%s", hp.country)
 	}
 	if hp.category != "" {
-		baseUrl = baseUrl + fmt.Sprintf("category=%s", hp.category)
+		url = url + fmt.Sprintf("&category=%s", hp.category)
 	}
 	if hp.q != "" {
-		baseUrl = baseUrl + fmt.Sprintf("q=%s", hp.q)
+		url = url + fmt.Sprintf("&q=%s", hp.q)
 	}
 
-	return baseUrl, nil
+	return url, nil
 }
 
 // func (c *newsApi) topHeadlines(hp *HeadlinesParameters) (*HeadlinesResponse, error) {
