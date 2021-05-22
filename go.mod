@@ -1,3 +1,3 @@
 module github.com/kissmikijr/go-news
 
-go 1.14
+go 1.16
