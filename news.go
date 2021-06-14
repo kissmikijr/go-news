@@ -223,7 +223,6 @@ type SourcesParameters struct {
 }
 
 const (
-	//Categories
 	CATEGORY_BUSINESS category = iota
 	CATEGORY_ENTERTAINMENT
 	CATEGORY_GENERAL
@@ -234,8 +233,6 @@ const (
 )
 
 const (
-
-	//Languages
 	LANG_AR language = iota
 	LANG_DE
 	LANG_EN
@@ -253,8 +250,6 @@ const (
 )
 
 const (
-
-	//Countries
 	COUNTRY_AE country = iota
 	COUNTRY_AR
 	COUNTRY_AT

@@ -100,5 +100,7 @@ func TestCreateSourcesUrl(t *testing.T) {
 	if url != "http://newsapi.org/v2/sources?apiKey=api-key&category=business&language=de&country=ae" {
 		t.Errorf("got %s", url)
 	}
+}
+func TestCreateSourcesUrlThrowsError(t *testing.T) {
 
 }
