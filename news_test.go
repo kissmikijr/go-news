@@ -3,7 +3,6 @@ package news
 import (
 	"fmt"
 	"testing"
-	"log"
 )
 
 func TestCreatUrlReturnsError(t *testing.T) {
@@ -48,7 +47,7 @@ func TestCreateHeadlinesUrl(t *testing.T) {
 		{&HeadlinesParameters{q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&q=query-string", apiKey)},
 		{&HeadlinesParameters{category: "test"}, fmt.Sprintf("/top-headlines?apiKey=%s&category=test", apiKey)},
 		{&HeadlinesParameters{country: "test", q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&q=query-string", apiKey)},
-		{&HeadlinesParameters{country: "test", category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category",  apiKey)},
+		{&HeadlinesParameters{country: "test", category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category", apiKey)},
 		{&HeadlinesParameters{country: "test", q: "query-string", category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category&q=query-string", apiKey)},
 		{&HeadlinesParameters{category: "test-category", q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&category=test-category&q=query-string", apiKey)},
 	}
@@ -92,11 +91,14 @@ func TestCreateEverythinUrl(t *testing.T) {
 	}
 }
 
-func TestEverything(t *testing.T) {
-	client := NewApi("e1750e47dd844d54ac301a7f99c8cdf5")
-	resp, err := client.Everything(&EverythingParameters{})
-	log.Println(resp, "@@@@@")
+func TestCreateSourcesUrl(t *testing.T) {
+	client := NewApi("api-key")
+	url, err := client.createSourcesUrl(&SourcesParameters{category: CATEGORY_BUSINESS, language: LANG_DE, country: COUNTRY_AE})
 	if err != nil {
 		t.Error(err)
 	}
+	if url != "http://newsapi.org/v2/sources?apiKey=api-key&category=business&language=de&country=ae" {
+		t.Errorf("got %s", url)
+	}
+
 }
