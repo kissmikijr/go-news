@@ -11,7 +11,7 @@ import (
 
 var baseUrl = "http://newsapi.org/v2"
 
-type newsApi struct {
+type NewsApi struct {
 	apiKey string
 }
 
@@ -53,10 +53,10 @@ func (nae *NewsApiError) Error() string {
 	return fmt.Sprintf("received code: %s message: %s", nae.Code, nae.Message)
 }
 
-func NewApi(apiKey string) *newsApi {
-	return &newsApi{apiKey}
+func NewApi(apiKey string) *NewsApi {
+	return &NewsApi{apiKey}
 }
-func (c *newsApi) createHeadlinesUrl(hp *HeadlinesParameters) (string, error) {
+func (c *NewsApi) createHeadlinesUrl(hp *HeadlinesParameters) (string, error) {
 	url := baseUrl + fmt.Sprintf("/top-headlines?apiKey=%s", c.apiKey)
 	if hp.country == "" && hp.q == "" && hp.category == "" {
 		return "", errors.New("required parameters are missing. Please set any of the following parameters and try again: sources, q, language, country, category")
@@ -77,7 +77,7 @@ func (c *newsApi) createHeadlinesUrl(hp *HeadlinesParameters) (string, error) {
 	return url, nil
 }
 
-func (c *newsApi) createEverythingUrl(ep *EverythingParameters) (string, error) {
+func (c *NewsApi) createEverythingUrl(ep *EverythingParameters) (string, error) {
 	url := baseUrl + fmt.Sprintf("/everything?apiKey=%s", c.apiKey)
 
 	if ep.q != "" && ep.qInTitle != "" && ep.sources != "" && ep.domains != "" {
@@ -132,7 +132,7 @@ func createApiError(body io.Reader) error {
 	return nae
 }
 
-func (c *newsApi) TopHeadlines(hp *HeadlinesParameters) (*NewsResponse, error) {
+func (c *NewsApi) TopHeadlines(hp *HeadlinesParameters) (*NewsResponse, error) {
 	url, err := c.createHeadlinesUrl(hp)
 
 	if err != nil {
@@ -175,7 +175,7 @@ type EverythingResponse struct {
 	Articles     []Article `json:"articles"`
 }
 
-func (c *newsApi) Everything(ep *EverythingParameters) (*EverythingResponse, error) {
+func (c *NewsApi) Everything(ep *EverythingParameters) (*EverythingResponse, error) {
 	url, err := c.createEverythingUrl(ep)
 
 	if err != nil {
@@ -305,7 +305,7 @@ const (
 	COUNTRY_ZA
 )
 
-func (c *newsApi) createSourcesUrl(sp *SourcesParameters) (string, error) {
+func (c *NewsApi) createSourcesUrl(sp *SourcesParameters) (string, error) {
 	url := baseUrl + fmt.Sprintf("/sources?apiKey=%s", c.apiKey)
 
 	if sp.category.String() != "" {
@@ -337,7 +337,7 @@ type SourcesResponse struct {
 	Sources []Source
 }
 
-func (c *newsApi) Sources(sp *SourcesParameters) (*SourcesResponse, error) {
+func (c *NewsApi) Sources(sp *SourcesParameters) (*SourcesResponse, error) {
 	url, err := c.createSourcesUrl(sp)
 	if err != nil {
 		return nil, err
