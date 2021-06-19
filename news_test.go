@@ -23,8 +23,8 @@ func TestCreateUrlReturnsErrorWhenSourcesUsedWithWrongParams(t *testing.T) {
 		in   *HeadlinesParameters
 		name string
 	}{
-		{&HeadlinesParameters{sources: "validsource1,validsource2", category: "valid-category"}, "source used with category"},
-		{&HeadlinesParameters{sources: "validsource1,validsource2", country: "valid-country"}, "source used with country"},
+		{&HeadlinesParameters{Sources: "validsource1,validsource2", Category: "valid-category"}, "source used with category"},
+		{&HeadlinesParameters{Sources: "validsource1,validsource2", Country: "valid-country"}, "source used with country"},
 	}
 
 	for _, tt := range urltests {
@@ -43,13 +43,13 @@ func TestCreateHeadlinesUrl(t *testing.T) {
 		in  *HeadlinesParameters
 		out string
 	}{
-		{&HeadlinesParameters{country: "test"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test", apiKey)},
-		{&HeadlinesParameters{q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&q=query-string", apiKey)},
-		{&HeadlinesParameters{category: "test"}, fmt.Sprintf("/top-headlines?apiKey=%s&category=test", apiKey)},
-		{&HeadlinesParameters{country: "test", q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&q=query-string", apiKey)},
-		{&HeadlinesParameters{country: "test", category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category", apiKey)},
-		{&HeadlinesParameters{country: "test", q: "query-string", category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category&q=query-string", apiKey)},
-		{&HeadlinesParameters{category: "test-category", q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&category=test-category&q=query-string", apiKey)},
+		{&HeadlinesParameters{Country: "test"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test", apiKey)},
+		{&HeadlinesParameters{Q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&q=query-string", apiKey)},
+		{&HeadlinesParameters{Category: "test"}, fmt.Sprintf("/top-headlines?apiKey=%s&category=test", apiKey)},
+		{&HeadlinesParameters{Country: "test", Q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&q=query-string", apiKey)},
+		{&HeadlinesParameters{Country: "test", Category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category", apiKey)},
+		{&HeadlinesParameters{Country: "test", Q: "query-string", Category: "test-category"}, fmt.Sprintf("/top-headlines?apiKey=%s&country=test&category=test-category&q=query-string", apiKey)},
+		{&HeadlinesParameters{Category: "test-category", Q: "query-string"}, fmt.Sprintf("/top-headlines?apiKey=%s&category=test-category&q=query-string", apiKey)},
 	}
 
 	for _, tt := range urltests {
@@ -73,7 +73,7 @@ func TestCreateEverythinUrl(t *testing.T) {
 		in  *EverythingParameters
 		out string
 	}{
-		{&EverythingParameters{q: "test"}, fmt.Sprintf("/everything?apiKey=%s&q=test", apiKey)},
+		{&EverythingParameters{Q: "test"}, fmt.Sprintf("/everything?apiKey=%s&q=test", apiKey)},
 	}
 
 	for _, tt := range urltests {
@@ -93,7 +93,7 @@ func TestCreateEverythinUrl(t *testing.T) {
 
 func TestCreateSourcesUrl(t *testing.T) {
 	client := NewApi("api-key")
-	url, err := client.createSourcesUrl(&SourcesParameters{category: CATEGORY_BUSINESS, language: LANG_DE, country: COUNTRY_AE})
+	url, err := client.createSourcesUrl(&SourcesParameters{Category: CATEGORY_BUSINESS, Language: LANG_DE, Country: COUNTRY_AE})
 	if err != nil {
 		t.Error(err)
 	}

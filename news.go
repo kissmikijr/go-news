@@ -16,16 +16,16 @@ type NewsApi struct {
 }
 
 type HeadlinesParameters struct {
-	country  string
-	category string
-	q        string
-	sources  string
-	pageSize int
-	page     int
+	Country  string
+	Category string
+	Q        string
+	Sources  string
+	PageSize int
+	Page     int
 }
 type ArticleSource struct {
-	id   string
-	name string
+	Id   string
+	Name string
 }
 
 type Article struct {
@@ -58,20 +58,20 @@ func NewApi(apiKey string) *NewsApi {
 }
 func (c *NewsApi) createHeadlinesUrl(hp *HeadlinesParameters) (string, error) {
 	url := baseUrl + fmt.Sprintf("/top-headlines?apiKey=%s", c.apiKey)
-	if hp.country == "" && hp.q == "" && hp.category == "" {
+	if hp.Country == "" && hp.Q == "" && hp.Category == "" {
 		return "", errors.New("required parameters are missing. Please set any of the following parameters and try again: sources, q, language, country, category")
 	}
-	if hp.sources != "" && (hp.country != "" || hp.category != "") {
+	if hp.Sources != "" && (hp.Country != "" || hp.Category != "") {
 		return "", errors.New("you cant mix sources parameter with neither country nor category")
 	}
-	if hp.country != "" {
-		url = url + fmt.Sprintf("&country=%s", hp.country)
+	if hp.Country != "" {
+		url = url + fmt.Sprintf("&country=%s", hp.Country)
 	}
-	if hp.category != "" {
-		url = url + fmt.Sprintf("&category=%s", hp.category)
+	if hp.Category != "" {
+		url = url + fmt.Sprintf("&category=%s", hp.Category)
 	}
-	if hp.q != "" {
-		url = url + fmt.Sprintf("&q=%s", hp.q)
+	if hp.Q != "" {
+		url = url + fmt.Sprintf("&q=%s", hp.Q)
 	}
 
 	return url, nil
@@ -80,42 +80,42 @@ func (c *NewsApi) createHeadlinesUrl(hp *HeadlinesParameters) (string, error) {
 func (c *NewsApi) createEverythingUrl(ep *EverythingParameters) (string, error) {
 	url := baseUrl + fmt.Sprintf("/everything?apiKey=%s", c.apiKey)
 
-	if ep.q != "" && ep.qInTitle != "" && ep.sources != "" && ep.domains != "" {
+	if ep.Q != "" && ep.QinTitle != "" && ep.Sources != "" && ep.Domains != "" {
 		return "", errors.New("please set any of the following required parameters and try again: q, qInTitle, sources, domains")
 	}
 
-	if ep.q != "" {
-		url = url + fmt.Sprintf("&q=%s", ep.q)
+	if ep.Q != "" {
+		url = url + fmt.Sprintf("&q=%s", ep.Q)
 	}
-	if ep.qInTitle != "" {
-		url = url + fmt.Sprintf("&qInTitle=%s", ep.qInTitle)
+	if ep.QinTitle != "" {
+		url = url + fmt.Sprintf("&qInTitle=%s", ep.QinTitle)
 	}
-	if ep.sources != "" {
-		url = url + fmt.Sprintf("&sources=%s", ep.sources)
+	if ep.Sources != "" {
+		url = url + fmt.Sprintf("&sources=%s", ep.Sources)
 	}
-	if ep.domains != "" {
-		url = url + fmt.Sprintf("&domains=%s", ep.domains)
+	if ep.Domains != "" {
+		url = url + fmt.Sprintf("&domains=%s", ep.Domains)
 	}
-	if ep.excludeDomains != "" {
-		url = url + fmt.Sprintf("&excludeDomains=%s", ep.excludeDomains)
+	if ep.ExcludeDomains != "" {
+		url = url + fmt.Sprintf("&excludeDomains=%s", ep.ExcludeDomains)
 	}
-	if ep.from != "" {
-		url = url + fmt.Sprintf("&from=%s", ep.from)
+	if ep.From != "" {
+		url = url + fmt.Sprintf("&from=%s", ep.From)
 	}
-	if ep.to != "" {
-		url = url + fmt.Sprintf("&to=%s", ep.to)
+	if ep.To != "" {
+		url = url + fmt.Sprintf("&to=%s", ep.To)
 	}
-	if ep.language != "" {
-		url = url + fmt.Sprintf("&language=%s", ep.language)
+	if ep.Language != "" {
+		url = url + fmt.Sprintf("&language=%s", ep.Language)
 	}
-	if ep.sortBy != "" {
-		url = url + fmt.Sprintf("&sortBy=%s", ep.sortBy)
+	if ep.SortBy != "" {
+		url = url + fmt.Sprintf("&sortBy=%s", ep.SortBy)
 	}
-	if ep.pageSize != 0 {
-		url = url + fmt.Sprintf("&pageSize=%d", ep.pageSize)
+	if ep.PageSize != 0 {
+		url = url + fmt.Sprintf("&pageSize=%d", ep.PageSize)
 	}
-	if ep.page != 0 {
-		url = url + fmt.Sprintf("&page=%d", ep.page)
+	if ep.Page != 0 {
+		url = url + fmt.Sprintf("&page=%d", ep.Page)
 	}
 
 	return url, nil
@@ -157,17 +157,17 @@ func (c *NewsApi) TopHeadlines(hp *HeadlinesParameters) (*NewsResponse, error) {
 }
 
 type EverythingParameters struct {
-	q              string
-	qInTitle       string
-	sources        string
-	domains        string
-	excludeDomains string
-	from           string
-	to             string
-	language       string
-	sortBy         string
-	pageSize       int
-	page           int
+	Q              string
+	QinTitle       string
+	Sources        string
+	Domains        string
+	ExcludeDomains string
+	From           string
+	To             string
+	Language       string
+	SortBy         string
+	PageSize       int
+	Page           int
 }
 type EverythingResponse struct {
 	Status       string    `json:"status"`
@@ -217,9 +217,9 @@ func (c country) String() string {
 }
 
 type SourcesParameters struct {
-	category category
-	language language
-	country  country
+	Category category
+	Language language
+	Country  country
 }
 
 const (
@@ -308,16 +308,16 @@ const (
 func (c *NewsApi) createSourcesUrl(sp *SourcesParameters) (string, error) {
 	url := baseUrl + fmt.Sprintf("/sources?apiKey=%s", c.apiKey)
 
-	if sp.category.String() != "" {
-		url = url + fmt.Sprintf("&category=%s", sp.category)
+	if sp.Category.String() != "" {
+		url = url + fmt.Sprintf("&category=%s", sp.Category)
 	}
 
-	if sp.language.String() != "" {
-		url = url + fmt.Sprintf("&language=%s", sp.language)
+	if sp.Language.String() != "" {
+		url = url + fmt.Sprintf("&language=%s", sp.Language)
 	}
 
-	if sp.country.String() != "" {
-		url = url + fmt.Sprintf("&country=%s", sp.country)
+	if sp.Country.String() != "" {
+		url = url + fmt.Sprintf("&country=%s", sp.Country)
 	}
 
 	return url, nil
