@@ -67,6 +67,7 @@ func (c *NewsApi) createHeadlinesUrl(hp *HeadlinesParameters) (string, error) {
 	if hp.Country != "" {
 		url = url + fmt.Sprintf("&country=%s", hp.Country)
 	}
+	
 	if hp.Category != "" {
 		url = url + fmt.Sprintf("&category=%s", hp.Category)
 	}
